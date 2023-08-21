@@ -66,10 +66,6 @@ abstract class Relation
         $this->relationKey = $relationKey;
         $this->foreignKey = $foreignKey;
 
-        static::$modelResolver = function (array $modelObjectClasses, array $relationMap) {
-            return array_search($modelObjectClasses, $relationMap);
-        };
-
         $this->initRelation();
     }
 
@@ -238,7 +234,7 @@ abstract class Relation
      */
     public function getNewDefaultModel(): Model
     {
-        $model = new $this->default();
+        $model = new $this->default;
 
         $model->setConnection($this->parent->getConnectionName());
 
@@ -248,7 +244,7 @@ abstract class Relation
     /**
      * Get the foreign model by the given value.
      */
-    protected function getForeignModelByValue(string $value): ?Model
+    public function getForeignModelByValue(string $value): ?Model
     {
         return $this->foreignKeyIsDistinguishedName()
             ? $this->query->clearFilters()->find($value)
@@ -296,6 +292,20 @@ abstract class Relation
      */
     protected function transformResults(Collection $results): Collection
     {
+        return $results->transform(function (Model $entry) {
+            $model = $this->determineModelFromRelated(
+                $entry, $this->getRelationMap()
+            );
+
+            return class_exists($model) ? $entry->convert(new $model) : $entry;
+        });
+    }
+
+    /**
+     * Get a map of the related models and their object classes.
+     */
+    public function getRelationMap(): array
+    {
         $relationMap = [];
 
         foreach ($this->related as $relation) {
@@ -304,11 +314,7 @@ abstract class Relation
             );
         }
 
-        return $results->transform(fn (Model $entry) => (
-            class_exists($model = $this->determineModelFromRelated($entry, $relationMap))
-                ? $entry->convert(new $model)
-                : $entry
-        ));
+        return $relationMap;
     }
 
     /**
@@ -333,12 +339,19 @@ abstract class Relation
             $model->getObjectClasses()
         );
 
-        return call_user_func(
-            static::$modelResolver,
-            $modelObjectClasses,
-            $relationMap,
-            $model,
-        );
+        $modelResolver = static::$modelResolver ?? function (array $modelObjectClasses, array $relationMap) {
+            return array_search($modelObjectClasses, $relationMap);
+        };
+
+        return call_user_func($modelResolver, $modelObjectClasses, $relationMap, $model);
+    }
+
+    /**
+     * Dispatch the model events with the given arguments.
+     */
+    protected function dispatchModelEvent(Model $model, array|string $event, ...$args): void
+    {
+        $model->dispatch($event, $args);
     }
 
     /**
