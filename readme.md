@@ -8,9 +8,6 @@
     <a href="https://github.com/DirectoryTree/LdapRecord/actions">
         <img src="https://img.shields.io/github/actions/workflow/status/directorytree/ldaprecord/run-tests.yml?branch=master&style=flat-square">
     </a>
-    <a href="https://scrutinizer-ci.com/g/DirectoryTree/LdapRecord/?branch=master">
-        <img src="https://img.shields.io/scrutinizer/g/DirectoryTree/LdapRecord/master.svg?style=flat-square"/>
-    </a>
     <a href="https://packagist.org/packages/DirectoryTree/LdapRecord">
         <img src="https://img.shields.io/packagist/dt/DirectoryTree/LdapRecord.svg?style=flat-square"/>
     </a>

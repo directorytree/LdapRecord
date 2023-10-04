@@ -57,6 +57,8 @@ class HasMany extends OneToMany
                     return false;
                 }
             }
+
+            return true;
         });
     }
 
@@ -93,6 +95,8 @@ class HasMany extends OneToMany
                     }
                 });
             });
+
+            return true;
         });
     }
 

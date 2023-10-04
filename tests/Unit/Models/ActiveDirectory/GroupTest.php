@@ -19,7 +19,7 @@ class GroupTest extends TestCase
     public function test_rid_accessor_works()
     {
         $group = new Group();
-        $this->assertEquals([], $group->rid);
+        $this->assertEmpty($group->rid);
 
         $group = new Group(['objectsid' => 'S-1-5']);
         $this->assertEquals(['5'], $group->rid);

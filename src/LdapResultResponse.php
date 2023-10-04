@@ -9,8 +9,8 @@ class LdapResultResponse
      */
     public function __construct(
         public readonly int $errorCode = 0,
-        public readonly string|null $matchedDn = null,
-        public readonly string|null $errorMessage = null,
+        public readonly ?string $matchedDn = null,
+        public readonly ?string $errorMessage = null,
         public readonly ?array $referrals = null,
         public readonly ?array $controls = null,
     ) {
@@ -21,7 +21,7 @@ class LdapResultResponse
      */
     public function successful(): bool
     {
-        return $this->errorCode === 0 && empty($this->errorMessage);
+        return $this->errorCode === 0;
     }
 
     /**

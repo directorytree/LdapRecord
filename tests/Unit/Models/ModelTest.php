@@ -678,6 +678,7 @@ class ModelTest extends TestCase
     public function test_create_fills_attributes()
     {
         $model = ModelCreateTestStub::create(['foo' => ['bar']]);
+
         $this->assertEquals(['foo' => ['bar']], $model->getAttributes());
     }
 

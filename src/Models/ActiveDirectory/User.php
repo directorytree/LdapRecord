@@ -4,9 +4,9 @@ namespace LdapRecord\Models\ActiveDirectory;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
+use LdapRecord\Models\ActiveDirectory\Concerns\HasAccountControl;
 use LdapRecord\Models\ActiveDirectory\Concerns\HasPrimaryGroup;
 use LdapRecord\Models\ActiveDirectory\Scopes\RejectComputerObjectClass;
-use LdapRecord\Models\Attributes\AccountControl;
 use LdapRecord\Models\Concerns\CanAuthenticate;
 use LdapRecord\Models\Concerns\HasPassword;
 use LdapRecord\Models\Relations\HasMany;
@@ -18,6 +18,7 @@ class User extends Entry implements Authenticatable
     use HasPassword;
     use HasPrimaryGroup;
     use CanAuthenticate;
+    use HasAccountControl;
 
     /**
      * The password's attribute name.
@@ -63,33 +64,7 @@ class User extends Entry implements Authenticatable
         // class. This is needed due to computer objects containing all
         // of the ActiveDirectory 'user' object classes. Without
         // this scope, they would be included in results.
-        static::addGlobalScope(new RejectComputerObjectClass());
-    }
-
-    /**
-     * Determine if the user's account is enabled.
-     */
-    public function isEnabled(): bool
-    {
-        return ! $this->isDisabled();
-    }
-
-    /**
-     * Determine if the user's account is disabled.
-     */
-    public function isDisabled(): bool
-    {
-        return $this->accountControl()->hasFlag(AccountControl::ACCOUNTDISABLE);
-    }
-
-    /**
-     * Get the user's account control.
-     */
-    public function accountControl(): AccountControl
-    {
-        return new AccountControl(
-            $this->getFirstAttribute('userAccountControl')
-        );
+        static::addGlobalScope(new RejectComputerObjectClass);
     }
 
     /**

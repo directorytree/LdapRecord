@@ -246,7 +246,7 @@ class Builder extends BaseBuilder
     /**
      * Finds a record by its string GUID.
      */
-    public function findByGuid(string $guid, array|string $columns = ['*']): Model|null
+    public function findByGuid(string $guid, array|string $columns = ['*']): ?Model
     {
         try {
             return $this->findByGuidOrFail($guid, $columns);

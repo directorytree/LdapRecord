@@ -21,10 +21,10 @@ class DistinguishedNameTest extends TestCase
     public function test_rdns()
     {
         $dn = new DistinguishedName(null);
-        $this->assertEquals([], $dn->rdns());
+        $this->assertEmpty($dn->rdns());
 
         $dn = new DistinguishedName('foo');
-        $this->assertEquals([], $dn->rdns());
+        $this->assertEmpty($dn->rdns());
 
         $dn = new DistinguishedName('cn=foo\,bar');
         $this->assertEquals(['cn=foo\2Cbar'], $dn->rdns());
@@ -36,10 +36,10 @@ class DistinguishedNameTest extends TestCase
     public function test_components()
     {
         $dn = new DistinguishedName(null);
-        $this->assertEquals([], $dn->components());
+        $this->assertEmpty($dn->components());
 
         $dn = new DistinguishedName('foo');
-        $this->assertEquals([], $dn->components());
+        $this->assertEmpty($dn->components());
 
         $dn = new DistinguishedName('cn=foo\,bar');
         $this->assertEquals(['cn=foo\2cbar'], $dn->components());
@@ -51,10 +51,10 @@ class DistinguishedNameTest extends TestCase
     public function test_values()
     {
         $dn = new DistinguishedName(null);
-        $this->assertEquals([], $dn->values());
+        $this->assertEmpty($dn->values());
 
         $dn = new DistinguishedName('foo');
-        $this->assertEquals([], $dn->values());
+        $this->assertEmpty($dn->values());
 
         $dn = new DistinguishedName('cn=foo');
         $this->assertEquals(['foo'], $dn->values());

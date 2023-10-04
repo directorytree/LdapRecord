@@ -51,7 +51,7 @@ class ConnectionManager
     /**
      * Add a new connection.
      */
-    public function addConnection(Connection $connection, ?string $name = null): void
+    public function addConnection(Connection $connection, string $name = null): void
     {
         $this->connections[$name ?? $this->default] = $connection;
 
@@ -83,7 +83,7 @@ class ConnectionManager
      *
      * @throws ContainerException If the given connection does not exist.
      */
-    public function getConnection(?string $name = null): Connection
+    public function getConnection(string $name = null): Connection
     {
         if ($this->hasConnection($name = $name ?? $this->default)) {
             return $this->connections[$name];

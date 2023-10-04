@@ -34,10 +34,8 @@ class Cache
 
     /**
      * Store an item in the cache.
-     *
-     * @param  DateTimeInterface|DateInterval|int|null  $ttl
      */
-    public function put(string $key, mixed $value, DateTimeInterface|DateInterval|int|null $ttl = null): bool
+    public function put(string $key, mixed $value, DateTimeInterface|DateInterval|int $ttl = null): bool
     {
         return $this->store->set($key, $value, $this->secondsUntil($ttl));
     }

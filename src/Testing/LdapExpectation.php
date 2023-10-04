@@ -154,8 +154,8 @@ class LdapExpectation
      */
     public function andReturnResponse(
         int $errorCode = 0,
-        string|null $matchedDn = null,
-        string|null $errorMessage = null,
+        string $matchedDn = null,
+        string $errorMessage = null,
         array $referrals = [],
         array $controls = []
     ): static {

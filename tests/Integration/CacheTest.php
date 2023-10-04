@@ -53,12 +53,12 @@ class CacheTest extends TestCase
     {
         $this->resetConnection(cache: new ArrayCacheStore);
 
-        $this->assertEquals([], $this->getUserCnsFromCache());
+        $this->assertEmpty($this->getUserCnsFromCache());
 
         $user = $this->makeUser($this->ou);
         $user->save();
 
-        $this->assertEquals([], $this->getUserCnsFromCache());
+        $this->assertEmpty($this->getUserCnsFromCache());
     }
 
     public function test_that_results_are_fetched_from_cache2()

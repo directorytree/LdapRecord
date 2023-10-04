@@ -425,7 +425,7 @@ trait HasAttributes
     /**
      * Cast an attribute to a native PHP type.
      */
-    protected function castAttribute(string $key, array|null $value): mixed
+    protected function castAttribute(string $key, ?array $value): mixed
     {
         $value = $this->castRequiresArrayValue($key) ? $value : Arr::first($value);
 

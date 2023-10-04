@@ -11,7 +11,7 @@ class DistinguishedName implements Stringable
     use EscapesValues;
 
     /**
-     * The underlying raw value.
+     * The underlying raw distinguished name value.
      */
     protected string $value;
 

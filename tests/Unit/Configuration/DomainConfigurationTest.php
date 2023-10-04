@@ -36,14 +36,14 @@ class DomainConfigurationTest extends TestCase
         $config = new DomainConfiguration();
 
         $this->assertEquals(389, $config->get('port'));
-        $this->assertEquals([], $config->get('hosts'));
+        $this->assertEmpty($config->get('hosts'));
         $this->assertEquals(0, $config->get('follow_referrals'));
         $this->assertEmpty($config->get('username'));
         $this->assertEmpty($config->get('password'));
         $this->assertEmpty($config->get('base_dn'));
         $this->assertFalse($config->get('use_ssl'));
         $this->assertFalse($config->get('use_tls'));
-        $this->assertEquals([], $config->get('options'));
+        $this->assertEmpty($config->get('options'));
     }
 
     public function test_all_options()

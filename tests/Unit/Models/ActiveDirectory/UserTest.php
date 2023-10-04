@@ -189,6 +189,17 @@ class UserTest extends TestCase
         $this->assertFalse($uac->hasFlag(AccountControl::DONT_EXPIRE_PASSWORD));
     }
 
+    public function test_user_can_have_account_control_object_set_on_attribute()
+    {
+        $user = new User();
+
+        $uac = $user->accountControl();
+
+        $user->userAccountControl = $uac->setAccountIsNormal();
+
+        $this->assertEquals(AccountControl::NORMAL_ACCOUNT, $user->accountControl()->getValue());
+    }
+
     public function test_user_is_disabled()
     {
         $user = new User();

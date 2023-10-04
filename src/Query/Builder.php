@@ -290,7 +290,7 @@ class Builder
     /**
      * Set the distinguished name for the query.
      */
-    public function setDn(Model|string|null $dn = null): static
+    public function setDn(Model|string $dn = null): static
     {
         $this->dn = $this->substituteBaseInDn($dn);
 
@@ -312,7 +312,7 @@ class Builder
     /**
      * Alias for setting the distinguished name for the query.
      */
-    public function in(Model|string|null $dn = null): static
+    public function in(Model|string $dn = null): static
     {
         return $this->setDn($dn);
     }

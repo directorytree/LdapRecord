@@ -249,6 +249,30 @@ class ModelRelationTest extends TestCase
 
         $this->assertInstanceOf(RelatedModelTestStub::class, $relation->first());
     }
+
+    public function test_related_models_can_be_resolved_with_resolver_callback()
+    {
+        $relation = (new ModelRelationTestStub())->relation();
+
+        $related = new Entry();
+
+        $related->objectclass = ['bar', 'foo'];
+        $related->setDn('cn=foo,dc=local,dc=com');
+
+        $relation->setResults([$related]);
+
+        Relation::resolveModelsUsing(function (array $modelObjectClasses, array $relationMap) use ($related) {
+            $this->assertEquals($related->getObjectClasses(), $modelObjectClasses);
+            $this->assertEquals([RelatedModelTestStub::class => $related->getObjectClasses()], $relationMap);
+
+            return array_search($modelObjectClasses, $relationMap);
+        });
+
+        $relation->first();
+
+        // Reset static callback.
+        Relation::resolveModelsUsing(null);
+    }
 }
 
 class RelationTestStub extends Relation
