@@ -851,7 +851,7 @@ class Builder
     }
 
     /**
-     * Determine if the query has a sotr request control header.
+     * Determine if the query has a sort request control header.
      */
     public function hasOrderBy(): bool
     {
